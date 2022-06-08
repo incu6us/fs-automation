@@ -1,0 +1,5 @@
+---
+rules:
+  - operation: ANY
+    path: /tmp
+    cmd: echo "operation {{operation}}({{action}}) on {{path}} by full path {{fullpath}}" was performed
