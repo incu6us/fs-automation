@@ -24,16 +24,17 @@ jobs:
         run: |
           echo GO_VERSION=$(go version | awk '{print $3;}') >> $GITHUB_ENV
 
-      - name: Login to Snapcraft
-        uses: samuelmeuli/action-snapcraft@v1
-        with:
-          snapcraft_token: ${{ secrets.SNAPCRAFT_TOKEN }}
+#      - name: Login to Snapcraft
+#        uses: samuelmeuli/action-snapcraft@v1
+#        with:
+#          snapcraft_token: ${{ secrets.SNAPCRAFT_TOKEN }}
 
       - name: Run GoReleaser
-        uses: goreleaser/goreleaser-action@v1
+        uses: goreleaser/goreleaser-action@v3
         with:
           version: latest
           args: release --rm-dist
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
+          FURY_TOKEN: ${{ secrets.FURY_TOKEN }}
           GO_VERSION: ${{ env.GITHUB_GO_VERSION }}

@@ -1,4 +1,10 @@
 ---
+# Available operations: ANY, CREATE, WRITE, REMOVE, RENAME, CHMOD
+# List of vars for `cmd` section to config:
+#   {{path}} - will use Path variable as is;
+#   {{fullpath}} - will use full path. Path option is as a prefix;
+#   {{operation}} - will use a performed operation (ANY, CREATE, WRITE, REMOVE, RENAME, CHMOD);
+#   {{action}} - real action which was done(in case of ANY it will show one of CREATE, WRITE, REMOVE, RENAME, CHMOD)
 rules:
   - operation: ANY
     path: /tmp

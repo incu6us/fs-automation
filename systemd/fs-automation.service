@@ -1,5 +1,5 @@
 [Unit]
-Description=Actions on files/directories events
+Description=fs-automation - Actions on files/directories events
 
 [Service]
 Restart=no

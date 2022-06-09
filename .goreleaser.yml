@@ -38,7 +38,7 @@ nfpms:
     id: packages
     maintainer: Vyacheslav Pryimak <vyacheslavpryimak@gmail.com>
     description: |-
-      Actions on files/directories events
+      fs-automation - Actions on files/directories events
     vendor: Vyacheslav Pryimak
     homepage: https://github.com/incu6us/fs-automation
     license: MIT
@@ -50,36 +50,47 @@ nfpms:
         type: config
       - src: systemd/fs-automation.service
         dst: /etc/systemd/system/fs-automation.service
-        type: config
     formats:
       - deb
       - rpm
 
-#release:
-#  prerelease: auto
-#  github:
-#    owner: incu6us
-#    name: fs-automation
+release:
+  prerelease: auto
+  github:
+    owner: incu6us
+    name: fs-automation
 
-snapcrafts:
-  - id: fs-automation
-    name_template: "{{ .ProjectName }}-{{ .Version }}-{{ .Os }}_{{ .Arch }}"
-    publish: true
-    summary: "Actions on files/directories events"
-    description: |
-      Actions on files/directories events
-    grade: stable
-    confinement: strict
-    license: MIT
-    extra_files:
-      - source: config.yaml
-        destination: etc/fs-automation/config.yaml
-        mode: 0644
-    layout:
-      /etc/fs-automation:
-        bind: $SNAP/etc/fs-automation
-    apps:
-      fs-automation:
-        args: start --cfg /etc/fs-automation/config.yaml
-        daemon: simple
-        stop_mode: sigterm
+#snapcrafts:
+#  - id: fs-automation
+#    name_template: "{{ .ProjectName }}-{{ .Version }}-{{ .Os }}_{{ .Arch }}"
+#    publish: true
+#    summary: "Actions on files/directories events"
+#    description: |
+#      Actions on files/directories events
+##    grade: stable
+##    confinement: strict
+#    grade: devel
+#    confinement: devmode
+#    license: MIT
+#    base: core18
+#    extra_files:
+#      - source: config.yaml
+#        destination: etc/config.yaml
+#        mode: 0644
+#    layout:
+#      /opt/fs-automation/config.yaml:
+#        bind_file: $SNAP_DATA/etc/config.yaml
+#    apps:
+#      fs-automation:
+#        args: start --cfg $SNAP/etc/config.yaml
+#        daemon: simple
+#        install_mode: "disable"
+#        stop_mode: sigterm
+
+publishers:
+  - name: fury.io
+    ids:
+      - packages
+    env:
+      - 'FURY_TOKEN={{ .Env.FURY_TOKEN }}'
+    cmd: ./scripts/fury-upload.sh {{ .ArtifactName }}
