@@ -53,20 +53,17 @@ nfpms:
         type: config
     formats:
       - deb
-#      - rpm
+      - rpm
 
-release:
-  prerelease: auto
-  github:
-    owner: incu6us
-    name: fs-automation
+#release:
+#  prerelease: auto
+#  github:
+#    owner: incu6us
+#    name: fs-automation
 
 snapcrafts:
   - id: fs-automation
     name_template: "{{ .ProjectName }}-{{ .Version }}-{{ .Os }}_{{ .Arch }}"
-#    replacements:
-#      amd64: 64-bit
-#      386: 32-bit
     publish: true
     summary: "Actions on files/directories events"
     description: |
@@ -74,3 +71,15 @@ snapcrafts:
     grade: stable
     confinement: strict
     license: MIT
+    extra_files:
+      - source: config.yaml
+        destination: etc/fs-automation/config.yaml
+        mode: 0644
+    layout:
+      /etc/fs-automation:
+        bind: $SNAP/etc/fs-automation
+    apps:
+      fs-automation:
+        args: start --cfg /etc/fs-automation/config.yaml
+        daemon: simple
+        stop_mode: sigterm
