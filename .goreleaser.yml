@@ -1,0 +1,69 @@
+env:
+  - GO111MODULE=on
+  - CGO_ENABLED=0
+  - PROJECT_NAME=fs-automation
+  - PROJECT_USER=incu6us
+
+before:
+  hooks:
+    - go mod download
+
+builds:
+  - id: fs-automation-amd64
+    binary: fs-automation
+    goos:
+      - linux
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+    ldflags:
+      - -s -w -X "main.Tag={{ .Tag }}" -X "main.Commit={{ .FullCommit }}" -X "main.SourceURL={{ .GitURL }}" -X "main.GoVersion={{ .Env.GO_VERSION }}"
+
+checksum:
+  name_template: "checksums.txt"
+
+snapshot:
+  name_template: "{{ .Tag }}-next"
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
+
+release:
+  prerelease: auto
+  github:
+    owner: incu6us
+    name: fs-automation
+
+nfpms:
+  - id: packages
+    maintainer: Vyacheslav Pryimak <vyacheslavpryimak@gmail.com>
+    description: |-
+      Actions on files/directories events
+    vendor: Vyacheslav Pryimak
+    homepage: https://github.com/incu6us/fs-automation
+    license: MIT
+    bindir: /usr/bin
+    section: utils
+    contents:
+      - src: config.yaml
+        dst: /etc/fs-automation/config.yaml
+        type: config
+
+#snapcrafts:
+#  - id: fs-automation
+#    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+#    replacements:
+#      amd64: 64-bit
+#      386: 32-bit
+#    publish: true
+#    summary: "Actions on files/directories events"
+#    description: |
+#      Actions on files/directories events
+#    grade: stable
+#    confinement: strict
+#    license: MIT
