@@ -28,3 +28,17 @@ jobs:
       
     - name: Build
       run: go build -v ./...
+
+    - name: Create deb package
+      uses: skynet-core/nfpm@v1.5
+      id: deb-package
+      with:
+        config: "nfpm.yaml"
+        packager: "deb"
+
+    - name: Create rpm package
+      uses: skynet-core/nfpm@v1.5
+      id: rpm-package
+      with:
+        config: "nfpm.yaml"
+        packager: "rpm"
