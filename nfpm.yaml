@@ -7,10 +7,9 @@ description: Actions on files/directories events
 vendor: Vyacheslav Pryimak
 homepage: https://github.com/incu6us/fs-automation
 license: MIT
+
 contents:
   - src: config.yaml
     dst: /etc/fs-automation/config.yaml
     type: config
-    file_info:
-      mode: 0644
-bindir: /usr/bin
+
