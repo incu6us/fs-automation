@@ -33,14 +33,9 @@ changelog:
       - "^docs:"
       - "^test:"
 
-release:
-  prerelease: auto
-  github:
-    owner: incu6us
-    name: fs-automation
-
 nfpms:
-  - id: packages
+  - file_name_template: '{{ .ConventionalFileName }}'
+    id: packages
     maintainer: Vyacheslav Pryimak <vyacheslavpryimak@gmail.com>
     description: |-
       Actions on files/directories events
@@ -53,17 +48,26 @@ nfpms:
       - src: config.yaml
         dst: /etc/fs-automation/config.yaml
         type: config
+    formats:
+      - deb
+      - rpm
 
-#snapcrafts:
-#  - id: fs-automation
-#    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+release:
+  prerelease: auto
+  github:
+    owner: incu6us
+    name: fs-automation
+
+snapcrafts:
+  - id: fs-automation
+    name_template: "{{ .ProjectName }}-{{ .Version }}-{{ .Os }}_{{ .Arch }}"
 #    replacements:
 #      amd64: 64-bit
 #      386: 32-bit
-#    publish: true
-#    summary: "Actions on files/directories events"
-#    description: |
-#      Actions on files/directories events
-#    grade: stable
-#    confinement: strict
-#    license: MIT
+    publish: true
+    summary: "Actions on files/directories events"
+    description: |
+      Actions on files/directories events
+    grade: stable
+    confinement: strict
+    license: MIT
