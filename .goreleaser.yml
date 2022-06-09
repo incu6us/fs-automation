@@ -48,9 +48,12 @@ nfpms:
       - src: config.yaml
         dst: /etc/fs-automation/config.yaml
         type: config
+      - src: systemd/fs-automation.service
+        dst: /etc/systemd/system/fs-automation.service
+        type: config
     formats:
       - deb
-      - rpm
+#      - rpm
 
 release:
   prerelease: auto

@@ -1,0 +1,10 @@
+[Unit]
+Description=Actions on files/directories events
+
+[Service]
+Restart=no
+ExecStart=/usr/bin/fs-automation start --cfg /etc/fs-automation/config.yaml
+ExecStop=/bin/bash -c "pid=$(ps ax|grep /usr/bin/fs-automation|grep -v grep|awk '{print $1}'); if [ ! -z $pid ];then kill $pid;fi"
+
+[Install]
+WantedBy=multi-user.target
